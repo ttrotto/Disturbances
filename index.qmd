@@ -74,7 +74,7 @@ For now, don't worry about the last column of the dataframe, we'll deal with tha
 
 These steps are illustrated in @fig-sketch. We createad a grid to measure the distance from an infested tree to the "random point" we mentioed earlier. We use a grid to have a rigourous and reproducible layout. Note that when working with random numbers, you may want to `set.seed` for reproducibility. That is, by setting a seed you make (pseudo)-random numbers predictable and therefore you make sure that every time you run the instruction you'll obtain the same result. 
 
-![Illustration of the steps conducted to determine distance from infested trees to closest forest edge. The yellow square is the selected grid cell. The light blue arrow is the distance from the infested tree and the nearest forest edge. The zoomed in view helps you visualize steps 3 and 5. The green line is the distance from an infested tree to the nearest neighbor, while the pink line is the distance to a random point (the grid cell's center in our case).](data/webworm_analysis.png){#fig-sketch}
+![Illustration of the steps conducted to determine distance from infested trees to closest forest edge. The yellow square is a zoomed in view of the selected grid cell. The light blue arrow is the distance from the infested tree and the nearest forest edge. The green line is the distance from an infested tree to the nearest neighbor, while the pink line is the distance to a random point (the grid cell's center in our case).](data/webworm_analysis.png){#fig-sketch}
 
 Now, do webworms preferentially choose forest edge trees? Let's plot the data and have a look (@fig-edge)! 
 
