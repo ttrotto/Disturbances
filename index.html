@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tommaso Trotto &amp; Jen Baron (tommaso.trotto@ubc.ca)">
+<meta name="dcterms.date" content="2024-08-31">
+
+<title>GEM500: Historical data and landscape disturbances</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="index_files/libs/clipboard/clipboard.min.js"></script>
+<script src="index_files/libs/quarto-html/quarto.js"></script>
+<script src="index_files/libs/quarto-html/popper.min.js"></script>
+<script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="index_files/libs/quarto-html/anchor.min.js"></script>
+<link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-full toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#exploring-historical-data" id="toc-exploring-historical-data" class="nav-link active" data-scroll-target="#exploring-historical-data">Exploring historical data</a></li>
+  <li><a href="#landscape-disturbance" id="toc-landscape-disturbance" class="nav-link" data-scroll-target="#landscape-disturbance">Landscape disturbance</a>
+  <ul class="collapse">
+  <li><a href="#hypothesis-testing" id="toc-hypothesis-testing" class="nav-link" data-scroll-target="#hypothesis-testing">Hypothesis testing</a></li>
+  <li><a href="#effect-of-webworm-infestations-on-landscape-structure" id="toc-effect-of-webworm-infestations-on-landscape-structure" class="nav-link" data-scroll-target="#effect-of-webworm-infestations-on-landscape-structure">Effect of webworm infestations on landscape structure</a></li>
+  </ul></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a>
+  <ul class="collapse">
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+</div>
+<main class="content column-page-right" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">GEM500: Historical data and landscape disturbances</h1>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-right">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tommaso Trotto &amp; Jen Baron (tommaso.trotto@ubc.ca) </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">August 31, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="exploring-historical-data" class="level1">
+<h1>Exploring historical data</h1>
+<p>Landscape ecology investigates the patterns and processes that shape ecosystems. Ecosystem processes are dependent on temporal scale and linked through cross-scale interactions. To circumvent the problem of temporal scale, ecologists frequently use historical datasets to understand (<span class="citation" data-cites="tomscha2016">Tomscha et al. (<a href="#ref-tomscha2016" role="doc-biblioref">2016</a>)</span>): - Ecosystem structure and composition in different successional stages - Ecosystem dynamics over time - Legacy effects from management or disturbance that influence landscape pattern</p>
+<p>Historical data provide key opportunities to understand landscape dynamics (<span class="citation" data-cites="vellend2013">Vellend et al. (<a href="#ref-vellend2013" role="doc-biblioref">2013</a>)</span>). However, these datasets can often be hard to find or poorly documented. Learning how to find, use, and interpret historical data is an important skill in landscape ecology. One of the most common historical data sources you will encounter are aerial imagery. Since the 1930’s, airplanes have been equipped with cameras to capture snapshots of the landscape. To date, the aerial imagery archive makes it the longest available and spatially-continuous record of landscape changes we have (<span class="citation" data-cites="gergel2017">Gergel and Turner (<a href="#ref-gergel2017" role="doc-biblioref">2017</a>)</span>). These imagery are captured at very high spatial resolutions given the low flight altitude (~2000m), thus providing lots of details on landscape dynamics and historical baseline conditions for an evolving landscape. In Canada, aerial imagery acquisition is carried out by each province every 10-15 years on average. The imagery are periodically interpreted to extract valuable information on, for example, land cover, disturbances, and harvesting operations, which then populate the forest inventories we use for our analyses.</p>
+<p>Aerial imagery can be obtained from data portals made available by each Canadian province. For example, you can use the <a href="https://catalogue.data.gov.bc.ca/">BC Data Catalog</a> or <a href="https://open.canada.ca/en/open-data">Environment Canada Catalog</a> to request or download aerial imagery for a specific area. For example, take a look at <a href="#fig-stereo" class="quarto-xref">Figure&nbsp;1</a> which shows a stereopair, that is a collection of 2 highly-overlapping imagery collected within a very short time frame which can be used in a stereoscope to create an “illusion of depth” and perceive a 3D relief.</p>
+<div id="fig-stereo" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-stereo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="data/stereo.jpg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-stereo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Illustration of a stereopair.
+</figcaption>
+</figure>
+</div>
+<p>Note, however, how the stereopair really lacks of any explicit information on the landscape we can actually use. We observe relief, vegetation, and a stream, but we can’t directly use them in an analysis stream. We need to somehow report that observation. Therefore, to make these imagery more useful, we need to interpret them. Take a look at the historical and modern imagery pair in <a href="#fig-hm" class="quarto-xref">Figure&nbsp;2</a>. We clearly see that in the modern imagery on the right there is a new road north to the river, and that the river’s delta has also changed. While we can observe that, we need a concrete piece of information we can use to conduct any sort of analysis. That’s when imagery interpretation (i.e.&nbsp;photointerpretation) comes into play. Trained professionals look for unique and homogeneous characteristics in the imagery that make up a particular feature of interest. For example, say we are interested in seeing how the forest cover per tree species has changed over time. Therefore, we need a series of layers that clearly tell us where the trees are, where they are not, and what species they are. To do that, we traditionally draw polygons around features of interest. <a href="#fig-interp" class="quarto-xref">Figure&nbsp;3</a> shows an interpretation scheme for each imagery. This information now is very useful because it is georeferenced and can be used to populate forest inventories or conduct our analysis on forest cover changes over time per species - if we had an identical classification scheme for both imagery.</p>
+<div id="fig-hm" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="data/hm.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Historical (left) and modern (right) aerial imagery.
+</figcaption>
+</figure>
+</div>
+<div id="fig-interp" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-interp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="data/interpretation.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-interp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Photointerpreted aerial imagery.
+</figcaption>
+</figure>
+</div>
+<p><strong><em>Question 1: In simple words, describe the value of historical imagery in answering ecological questions at the stand- and landscape-level. Use 2 bullet points for each of stand and landscape.</em></strong></p>
+<p><strong><em>Question 2: In simple words, describe the drawback of historical imagery in answering ecological questions at the stand- and landscape-level. Use 2 bullet points for each of stand and landscape.</em></strong></p>
+</section>
+<section id="landscape-disturbance" class="level1">
+<h1>Landscape disturbance</h1>
+<p>One other very common use-case or aerial imagery that you will likely encounter is disturbance mapping and tracking. Using aerial imagery, we can gather high spatial resolution information on the landscape affected by disturbances, as well as their location and evolution over time as imagery are interpreted. To start getting your hands dirty with historical data, for this lab we are going to work with aerial imagery and disturbance data to explore the relationship between fall webworm outbreaks (<em>Hyphantria cunea</em>), a generalist lepidopteran herbivore, and landscape structure or, more simply put in our case, the spatial arrangement of forest patches. This dataset (<span class="citation" data-cites="gergel2017">Gergel and Turner (<a href="#ref-gergel2017" role="doc-biblioref">2017</a>)</span>) is a simple and straightforward example of how aerial imagery can be used to answer questions on the effect of disturbances on the landscape.</p>
+<p>For this lab, we are going to work with: - An historical imagery of central Oklahoma in 1996 - A presence/absence dataset of infestation spots due to fall webform during a severe outbreak</p>
+<p>We are interested in understanding the relationship between the location of the infestations and the structure of the landscape. In particular, we want to see if fall webworms preferentially select forest edges to feed on as opposed to randomly dispersed hosts across the landscape. Why is this important? Because, for example, by knowing that fall webworms prefer to feed along forest edges, we can try reducing the level of landscape fragmentation to some degree to reduce the severity of the infestation. To begin with, let’s have a look at the aerial imagery and the disturbance data (<a href="#fig-webworm" class="quarto-xref">Figure&nbsp;4</a>).</p>
+<div id="fig-webworm" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-webworm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="data/webworm.jpg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-webworm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Webworm infestation location in central Oklahoma.
+</figcaption>
+</figure>
+</div>
+<p>We can already see clusters of infestation on the left-hand side of the imagery along the forest edges. However, let’s explore this hypothesis in a more rigorous way. One easy way to accept or reject our hypothesis that webworm preferentially feed on forest edges, we can use a <a href="https://en.wikipedia.org/wiki/Student%27s_t-test"><em>t-test</em></a> to compare the distance of infested tree to the closest forest edges. To do that, we need to first find the forest edges. Unfortunately, we don’t have access to a digital copy of the imagery, nor we have information on the scale. Therefore, we have to rely on actual pen and paper to measure unit-less distances from an infestation spot to the closes forest edge. Thankfully, that is already provided to you in the <code>data</code> directory. Look for <code>webworms.xlsx</code> and import it into your environment to explore it. In addition, we also have to measure the distance from an infested tree to a random spot on the landscape. Why? To have a term of comparison. Comparing distances to forest edges and to a random point will give us a sense of the webworm feeding spot preference. Let’s see how to do it.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>worms <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">'data/webworms.xlsx'</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>worms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 20 × 6
+   Observation     x     y d_infested_tree d_infested_tree_forest_edge
+         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;           &lt;dbl&gt;                       &lt;dbl&gt;
+ 1           1     9     6           6.48                       1.38  
+ 2           2     2    12          11.9                        3.55  
+ 3           3    12     0           6.80                       4.83  
+ 4           4     2    11          12.7                        1.14  
+ 5           5     4     9           1.31                       2.79  
+ 6           6     8     9           0.315                      2.96  
+ 7           7    12     2           0.604                      3.02  
+ 8           8     1     0           2.61                       5.69  
+ 9           9     3     0           8.43                       1.09  
+10          10     9    12           7.33                       5.90  
+11          11     3     9           7.13                       3.06  
+12          12     5    10           6.69                       1.53  
+13          13     6     7          11.4                        5.42  
+14          14     9     6          10.6                        4.80  
+15          15     7    11           6.90                       4.88  
+16          16    12     9           5.04                       4.90  
+17          17     5     9           6.09                       2.62  
+18          18     9     9           4.38                       4.19  
+19          19     5     0           3.04                       4.69  
+20          20     8     8           9.37                       0.0516
+# ℹ 1 more variable: d_nearest_infested_neighbour &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>For now, don’t worry about the last column of the dataframe, we’ll deal with that later. Now, follow the steps below to learn how we populated the fall webworm dataframe you saw earlier:</p>
+<ol type="1">
+<li>Build a reference grid on the imagery (used to make XY pairs)</li>
+<li>Randomly sample a grid cell using any random number generator routine (e.g.&nbsp;<code>sample</code>)</li>
+<li>Measure distance from the center of a grid cell to the nearest infested tree (<code>d_infested tree</code>)</li>
+<li>Measure distance from the infested spot within the grid cell, if any, and the closest forest edge (<code>d_infested_tree_forest_edge</code>)</li>
+<li>Measure distance to closest infested neighbor (<code>d_nearest_infested_neighbor</code>)</li>
+</ol>
+<p>These steps are illustrated in <a href="#fig-sketch" class="quarto-xref">Figure&nbsp;5</a>. We createad a grid to measure the distance from an infested tree to the “random point” we mentioed earlier. We use a grid to have a rigourous and reproducible layout. Note that when working with random numbers, you may want to <code>set.seed</code> for reproducibility. That is, by setting a seed you make (pseudo)-random numbers predictable and therefore you make sure that every time you run the instruction you’ll obtain the same result.</p>
+<div id="fig-sketch" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="data/webworm_analysis.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Illustration of the steps conducted to determine distance from infested trees to closest forest edge. The yellow square is the selected grid cell. The light blue arrow is the distance from the infested tree and the nearest forest edge. The zoomed in view helps you visualize steps 3 and 5. The green line is the distance from an infested tree to the nearest neighbor, while the pink line is the distance to a random point (the grid cell’s center in our case).
+</figcaption>
+</figure>
+</div>
+<p>Now, do webworms preferentially choose forest edge trees? Let’s plot the data and have a look (<a href="#fig-edge" class="quarto-xref">Figure&nbsp;6</a>)!</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>worms_long <span class="ot">&lt;-</span> worms <span class="sc">%&gt;%</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>d_nearest_infested_neighbour) <span class="sc">%&gt;%</span>  <span class="co"># remove columns we are not interested in</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">starts_with</span>(<span class="st">"d"</span>), </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to=</span><span class="st">"condition"</span>, </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to=</span><span class="st">"distance"</span>) </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> worms_long, <span class="fu">aes</span>(<span class="at">x=</span>condition, <span class="at">y =</span> distance)) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Grid cell's center"</span>, <span class="st">"Forest Edge"</span>)) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="st">"Distance from Infested Tree"</span>) <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-edge" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-edge-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-edge-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-edge-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Boxplot illustration of infested trees to the distance distribution of (left) grid cell’s center and (right) the nearest forest edge.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="hypothesis-testing" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-testing">Hypothesis testing</h2>
+<p>It’s time to really test if our hypothesis is true from a statistical perspective. The most basic approach we can take is using a <em>t-test</em>. How does it work? The t-test compares the mean of 2 distributions and if these are significantly different then they are indeed different! Explore the code below to see how to run a t-test in R.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(worms<span class="sc">$</span>d_infested_tree, worms<span class="sc">$</span>d_infested_tree_forest_edge, <span class="at">equal.var =</span> F)  <span class="co"># assume the variance is not identical for the 2 distributions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  worms$d_infested_tree and worms$d_infested_tree_forest_edge
+t = 3.3436, df = 27.077, p-value = 0.00243
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 1.171455 4.891715
+sample estimates:
+mean of x mean of y 
+ 6.455904  3.424319 </code></pre>
+</div>
+</div>
+<p><strong><em>Question 3: Knowing that fall webworms preferentially feed on forest edges, use 2 bullet points to discuss how changes in landscape structure, for example fragmentation, may exacerbate the severity of future infestations.</em></strong></p>
+</section>
+<section id="effect-of-webworm-infestations-on-landscape-structure" class="level2">
+<h2 class="anchored" data-anchor-id="effect-of-webworm-infestations-on-landscape-structure">Effect of webworm infestations on landscape structure</h2>
+<p>Great! Now that we figured that webworms do indeed prefer forest edges (p-value of t-test &lt; 0.05), remember our initial observation that most of the infested trees seemed to be clumped together (<a href="#fig-nn" class="quarto-xref">Figure&nbsp;7</a>)? What if webworms actually tend to mingle together instead of randomly distribute across the landscape? Again, we can explore this hypothesis in a rigorous way using the aerial imagery we have. How do we go about this? Simply, we could use the distance between 2 neighboring infested trees and use an index to tell us if neighboring infested trees are close enough to be considered “clumped” or not (column <code>d_infested_nearest_neighbor</code> in the <code>worms</code> dataframe). One option is to use the T-square index of spatial pattern, <span class="math inline">\(C\)</span> for short, that will give us a sense of whether our trees are grouped together in a clump or not (<span class="citation" data-cites="ludwig1988">Ludwig and Reynolds (<a href="#ref-ludwig1988" role="doc-biblioref">1988</a>)</span>).</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>worms_long <span class="ot">&lt;-</span> worms <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>d_infested_tree_forest_edge) <span class="sc">%&gt;%</span>  <span class="co"># remove columns we are not interested in</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">starts_with</span>(<span class="st">"d"</span>), </span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to=</span><span class="st">"condition"</span>, </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to=</span><span class="st">"distance"</span>) </span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> worms_long, <span class="fu">aes</span>(<span class="at">x=</span>condition, <span class="at">y =</span> distance)) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(<span class="at">alpha=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_discrete</span>(<span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Grid cell's center"</span>, <span class="st">"Nearest infested neighbor"</span>)) <span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="st">"Distance from Infested Neighbor"</span>) <span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-nn" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-nn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="index_files/figure-html/fig-nn-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-nn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Boxplot illustration of infested trees to the distance distribution of (left) grid cell’s center and (right) the nearest infested tree neighbor.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Let’s quickly explore how <span class="math inline">\(C\)</span> is calculated (<a href="#eq-c" class="quarto-xref">Equation&nbsp;1</a>):</p>
+<p><span id="eq-c"><span class="math display">\[ C = \sum[x_i^2/ (x_i^2 + 0.5y_i^2)] / n  \tag{1}\]</span></span></p>
+<p>Where <span class="math inline">\(x_i\)</span> is the distance from the random point we set at the beginning to the nearest infested tree, <span class="math inline">\(y_i\)</span> is the distance to the nearest infested neighbor, and <span class="math inline">\(n\)</span> is the total number of samples (20). <span class="math inline">\(C\)</span> is approximately 0.5 for random patterns, significantly less than 0.5 for uniform patterns, and significantly greater than 0.5 for clumped patterns. However, how do we determine if the value we get is <em>significantly</em> less or greater than 0.5? We can use a variant of the t-test, the <a href="https://en.wikipedia.org/wiki/Z-test"><em>z-test</em></a>. If <span class="math inline">\(z\)</span> (<a href="#eq-z" class="quarto-xref">Equation&nbsp;2</a>) is greater than or equal to 1.96, then <span class="math inline">\(C\)</span> is significantly different from 0.5, or in other words, the webworm-infested trees are non-randomly distributed on the landscape. Based on the results we obtained, we can conclude that fall webworms tend to clump together instead of randomly disperse across the landscape.</p>
+<p><span id="eq-z"><span class="math display">\[ z = (C - 0.5) / [1/(12n)]^{0.5}  \tag{2}\]</span></span></p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>xi <span class="ot">=</span> worms<span class="sc">$</span>d_infested_tree</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>yi <span class="ot">=</span> worms<span class="sc">$</span>d_nearest_infested_neighbour</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">20</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>c <span class="ot">=</span> <span class="fu">sum</span>((xi<span class="sc">^</span><span class="dv">2</span> <span class="sc">/</span> (xi<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> (yi <span class="sc">^</span> <span class="dv">2</span>))) <span class="sc">/</span> n)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>z <span class="ot">=</span> (c <span class="sc">-</span> <span class="fl">0.5</span>) <span class="sc">/</span> ((<span class="dv">1</span> <span class="sc">/</span> (<span class="dv">12</span> <span class="sc">*</span> n)) <span class="sc">^</span> <span class="fl">0.5</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"C value is"</span>, c))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "C value is 0.646248544378295"</code></pre>
+</div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"z value is"</span>, z))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "z value is 2.26567270713685"</code></pre>
+</div>
+</div>
+<p><strong><em>Question 4: Webworm outbreaks may cause widespread damage to trees and mast crops (fruits and nuts). White-tailed deer (Oidocoileus virginianus) populations in central Oklahoma depend heavily on mast production for winter forage. Using bullet points, describe how webworm infestations may influence deer survival over time in face of severe future infestations.</em></strong></p>
+</section>
+</section>
+<section id="conclusions" class="level1">
+<h1>Conclusions</h1>
+<p>In this lab we briefly explored the use of aerial imagery for environmental monitoring with an example on their applications to study fall webworms. However, while aerial imagery give us incredible views into the past, and are still widely used today for data and method validation, care must be taken during photointerpretation, as class attribution can be prone to errors. Therefore, always make sure you are aware of the errors associated with the data type and source you work with.</p>
+<section id="references" class="level3">
+<h3 class="anchored" data-anchor-id="references">References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-gergel2017" class="csl-entry" role="listitem">
+Gergel, Sarah E, and Monica G Turner. 2017. <em>Learning Landscape Ecology: A Practical Guide to Concepts and Techniques</em>. Springer.
+</div>
+<div id="ref-ludwig1988" class="csl-entry" role="listitem">
+Ludwig, John A, and James F Reynolds. 1988. <em>Statistical Ecology: A Primer in Methods and Computing</em>. Vol. 1. John Wiley &amp; Sons.
+</div>
+<div id="ref-tomscha2016" class="csl-entry" role="listitem">
+Tomscha, Stephanie A., Ira J. Sutherland, Delphine Renard, Sarah E. Gergel, Jeanine M. Rhemtulla, Elena M. Bennett, Lori D. Daniels, Ian M. S. Eddy, and Emily E. Clark. 2016. <span>“<span class="nocase">A Guide to Historical Data Sets for Reconstructing Ecosystem Service Change over Time</span>.”</span> <em>BioScience</em> 66 (9): 747–62. <a href="https://doi.org/10.1093/biosci/biw086">https://doi.org/10.1093/biosci/biw086</a>.
+</div>
+<div id="ref-vellend2013" class="csl-entry" role="listitem">
+Vellend, Mark, Carissa D Brown, Heather M Kharouba, Jenny L McCune, and Isla H Myers-Smith. 2013. <span>“Historical Ecology: Using Unconventional Data Sources to Test for Effects of Global Environmental Change.”</span> <em>American Journal of Botany</em> 100 (7): 1294–1305.
+</div>
+</div>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
