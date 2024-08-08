@@ -2,7 +2,7 @@
 title: "GEM500: Historical data and landscape disturbances"
 author: "Tommaso Trotto & Jen Baron (tommaso.trotto@ubc.ca)"
 affiliation: "University of British Columbia, Department of Forest Resource Management"
-date: "08/31/2024"
+date: "10/2/2024"
 bibliography: references.bib
 format:
   html:

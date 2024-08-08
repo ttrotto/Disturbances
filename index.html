@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.5.55">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Tommaso Trotto &amp; Jen Baron (tommaso.trotto@ubc.ca)">
-<meta name="dcterms.date" content="2024-08-31">
+<meta name="dcterms.date" content="2024-10-02">
 
 <title>GEM500: Historical data and landscape disturbances</title>
 <style>
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -90,7 +90,7 @@ div.csl-indent {
 <link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -166,7 +166,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">August 31, 2024</p>
+      <p class="date">October 2, 2024</p>
     </div>
   </div>
   
@@ -183,7 +183,7 @@ window.Quarto = {
 <p>Landscape ecology investigates the patterns and processes that shape ecosystems. Ecosystem processes are dependent on temporal scale and linked through cross-scale interactions. To circumvent the problem of temporal scale, ecologists frequently use historical datasets to understand (<span class="citation" data-cites="tomscha2016">Tomscha et al. (<a href="#ref-tomscha2016" role="doc-biblioref">2016</a>)</span>): - Ecosystem structure and composition in different successional stages - Ecosystem dynamics over time - Legacy effects from management or disturbance that influence landscape pattern</p>
 <p>Historical data provide key opportunities to understand landscape dynamics (<span class="citation" data-cites="vellend2013">Vellend et al. (<a href="#ref-vellend2013" role="doc-biblioref">2013</a>)</span>). However, these datasets can often be hard to find or poorly documented. Learning how to find, use, and interpret historical data is an important skill in landscape ecology. One of the most common historical data sources you will encounter are aerial imagery. Since the 1930’s, airplanes have been equipped with cameras to capture snapshots of the landscape. To date, the aerial imagery archive makes it the longest available and spatially-continuous record of landscape changes we have (<span class="citation" data-cites="gergel2017">Gergel and Turner (<a href="#ref-gergel2017" role="doc-biblioref">2017</a>)</span>). These imagery are captured at very high spatial resolutions given the low flight altitude (~2000m), thus providing lots of details on landscape dynamics and historical baseline conditions for an evolving landscape. In Canada, aerial imagery acquisition is carried out by each province every 10-15 years on average. The imagery are periodically interpreted to extract valuable information on, for example, land cover, disturbances, and harvesting operations, which then populate the forest inventories we use for our analyses.</p>
 <p>Aerial imagery can be obtained from data portals made available by each Canadian province. For example, you can use the <a href="https://catalogue.data.gov.bc.ca/">BC Data Catalog</a> or <a href="https://open.canada.ca/en/open-data">Environment Canada Catalog</a> to request or download aerial imagery for a specific area. For example, take a look at <a href="#fig-stereo" class="quarto-xref">Figure&nbsp;1</a> which shows a stereopair, that is a collection of 2 highly-overlapping imagery collected within a very short time frame which can be used in a stereoscope to create an “illusion of depth” and perceive a 3D relief.</p>
-<div id="fig-stereo" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-stereo" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-stereo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="data/stereo.jpg" class="img-fluid figure-img">
@@ -194,7 +194,7 @@ Figure&nbsp;1: Illustration of a stereopair.
 </figure>
 </div>
 <p>Note, however, how the stereopair really lacks of any explicit information on the landscape we can actually use. We observe relief, vegetation, and a stream, but we can’t directly use them in an analysis stream. We need to somehow report that observation. Therefore, to make these imagery more useful, we need to interpret them. Take a look at the historical and modern imagery pair in <a href="#fig-hm" class="quarto-xref">Figure&nbsp;2</a>. We clearly see that in the modern imagery on the right there is a new road north to the river, and that the river’s delta has also changed. While we can observe that, we need a concrete piece of information we can use to conduct any sort of analysis. That’s when imagery interpretation (i.e.&nbsp;photointerpretation) comes into play. Trained professionals look for unique and homogeneous characteristics in the imagery that make up a particular feature of interest. For example, say we are interested in seeing how the forest cover per tree species has changed over time. Therefore, we need a series of layers that clearly tell us where the trees are, where they are not, and what species they are. To do that, we traditionally draw polygons around features of interest. <a href="#fig-interp" class="quarto-xref">Figure&nbsp;3</a> shows an interpretation scheme for each imagery. This information now is very useful because it is georeferenced and can be used to populate forest inventories or conduct our analysis on forest cover changes over time per species - if we had an identical classification scheme for both imagery.</p>
-<div id="fig-hm" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-hm" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-hm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="data/hm.png" class="img-fluid figure-img">
@@ -204,7 +204,7 @@ Figure&nbsp;2: Historical (left) and modern (right) aerial imagery.
 </figcaption>
 </figure>
 </div>
-<div id="fig-interp" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-interp" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-interp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="data/interpretation.png" class="img-fluid figure-img">
@@ -222,7 +222,7 @@ Figure&nbsp;3: Photointerpreted aerial imagery.
 <p>One other very common use-case or aerial imagery that you will likely encounter is disturbance mapping and tracking. Using aerial imagery, we can gather high spatial resolution information on the landscape affected by disturbances, as well as their location and evolution over time as imagery are interpreted. To start getting your hands dirty with historical data, for this lab we are going to work with aerial imagery and disturbance data to explore the relationship between fall webworm outbreaks (<em>Hyphantria cunea</em>), a generalist lepidopteran herbivore, and landscape structure or, more simply put in our case, the spatial arrangement of forest patches. This dataset (<span class="citation" data-cites="gergel2017">Gergel and Turner (<a href="#ref-gergel2017" role="doc-biblioref">2017</a>)</span>) is a simple and straightforward example of how aerial imagery can be used to answer questions on the effect of disturbances on the landscape.</p>
 <p>For this lab, we are going to work with: - An historical imagery of central Oklahoma in 1996 - A presence/absence dataset of infestation spots due to fall webform during a severe outbreak</p>
 <p>We are interested in understanding the relationship between the location of the infestations and the structure of the landscape. In particular, we want to see if fall webworms preferentially select forest edges to feed on as opposed to randomly dispersed hosts across the landscape. Why is this important? Because, for example, by knowing that fall webworms prefer to feed along forest edges, we can try reducing the level of landscape fragmentation to some degree to reduce the severity of the infestation. To begin with, let’s have a look at the aerial imagery and the disturbance data (<a href="#fig-webworm" class="quarto-xref">Figure&nbsp;4</a>).</p>
-<div id="fig-webworm" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-webworm" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-webworm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="data/webworm.jpg" class="img-fluid figure-img">
@@ -280,7 +280,7 @@ Figure&nbsp;4: Webworm infestation location in central Oklahoma.
 <li>Measure distance to closest infested neighbor (<code>d_nearest_infested_neighbor</code>)</li>
 </ol>
 <p>These steps are illustrated in <a href="#fig-sketch" class="quarto-xref">Figure&nbsp;5</a>. We createad a grid to measure the distance from an infested tree to the “random point” we mentioed earlier. We use a grid to have a rigourous and reproducible layout. Note that when working with random numbers, you may want to <code>set.seed</code> for reproducibility. That is, by setting a seed you make (pseudo)-random numbers predictable and therefore you make sure that every time you run the instruction you’ll obtain the same result.</p>
-<div id="fig-sketch" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-sketch" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sketch-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="data/webworm_analysis.png" class="img-fluid figure-img">
@@ -309,7 +309,7 @@ Figure&nbsp;5: Illustration of the steps conducted to determine distance from in
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-edge" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-edge" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-edge-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-edge-1.png" class="img-fluid figure-img" width="672">
@@ -366,7 +366,7 @@ mean of x mean of y
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_blank</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-nn" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-nn" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-nn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="index_files/figure-html/fig-nn-1.png" class="img-fluid figure-img" width="672">
@@ -466,18 +466,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -509,7 +498,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -517,7 +528,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
