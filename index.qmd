@@ -36,7 +36,7 @@ Note, however, how the stereopair really lacks of any explicit information on th
 
 ***Question 1: In simple words, describe the value of historical imagery in answering ecological questions at the stand- and landscape-level. Use 2 bullet points for each of stand and landscape.***
 
-***Question 2: In simple words, describe the drawback of historical imagery in answering ecological questions at the stand- and landscape-level. Use 2 bullet points for each of stand and landscape.***
+***Question 2: How can historical imagery be integrated with modern remote sensing data to answer ecological questions?***
 
 # Landscape disturbance
 
